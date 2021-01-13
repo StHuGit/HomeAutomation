@@ -11,4 +11,5 @@ LCD room controller based on ESPHome and integrated to Home Assistant
 
 **Future changes**
 - Wooden frame next to lightning switch
-- replace BME280 by combination of CCS811 + SI7021 + BMP280 to expand capability for measuring CO_2 and efectively control recuperation unit.
+- Replace BME280 by combination of CCS811 + SI7021 + BMP280 to expand capability for measuring CO_2 and efectively control recuperation unit.
+- Replace ttgo t-4 with t-internet-PoE + external 2.4" display to utilize PoE and Ethernet for reliable connectivity
