@@ -1,0 +1,465 @@
+esphome:
+  name: controller
+  platform: ESP32
+  board: m5stack-core-esp32
+
+wifi:
+  ssid: "<WiFi SSID"
+  password: "<WiFi pass>"
+
+spi: 
+  clk_pin: 18
+  mosi_pin: 23
+  miso_pin: 12
+  
+i2c:
+  sda: 21
+  scl: 22
+  scan: True
+  id: bus_a
+
+sensor:
+  - platform: homeassistant
+    id: outside_temperature
+    entity_id: sensor.weather_temp
+    internal: true
+  - platform: homeassistant
+    id: inside_temperature
+    entity_id: sensor.weather_temp
+    internal: true
+  - platform: homeassistant
+    id: d0_temp
+    entity_id: sensor.weather_temp_d0
+    internal: true
+  - platform: homeassistant
+    id: d1_temp
+    entity_id: sensor.weather_temp_d1
+    internal: true
+  - platform: homeassistant
+    id: d2_temp
+    entity_id: sensor.weather_temp_d2
+    internal: true
+  - platform: homeassistant
+    id: d3_temp
+    entity_id: sensor.weather_temp_d3
+    internal: true
+  - platform: homeassistant
+    id: d4_temp
+    entity_id: sensor.weather_temp_d4
+    internal: true
+  - platform: homeassistant
+    id: d0_temp_low
+    entity_id: sensor.weather_temp_low_d0
+    internal: true
+  - platform: homeassistant
+    id: d1_temp_low
+    entity_id: sensor.weather_temp_low_d1
+    internal: true
+  - platform: homeassistant
+    id: d2_temp_low
+    entity_id: sensor.weather_temp_low_d2
+    internal: true
+  - platform: homeassistant
+    id: d3_temp_low
+    entity_id: sensor.weather_temp_low_d3
+    internal: true
+  - platform: homeassistant
+    id: d4_temp_low
+    entity_id: sensor.weather_temp_low_d4
+    internal: true
+  - platform: wifi_signal
+    name: "WiFi Signal Sensor"
+    update_interval: 60s
+    id: wifi_rssi
+    internal: true
+
+  - platform: bme280
+    temperature:
+      name: "BME280 Temperature"
+      oversampling: 16x
+      id: internalTemp
+    pressure:
+      name: "BME280 Pressure"
+      id: internalPress
+    humidity:
+      name: "BME280 Humidity"
+      id: internalHum
+    address: 0x76
+    update_interval: 60s
+    
+text_sensor:
+  - platform: homeassistant
+    id: condition
+    entity_id: sensor.weather_condition
+    internal: true
+  - platform: homeassistant
+    id: d0_condition
+    entity_id: sensor.weather_cond_d0
+    internal: true
+  - platform: homeassistant
+    id: d1_condition
+    entity_id: sensor.weather_cond_d1
+    internal: true
+  - platform: homeassistant
+    id: d2_condition
+    entity_id: sensor.weather_cond_d2
+    internal: true
+  - platform: homeassistant
+    id: d3_condition
+    entity_id: sensor.weather_cond_d3
+    internal: true
+  - platform: homeassistant
+    id: d4_condition
+    entity_id: sensor.weather_cond_d4
+    internal: true
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: 38
+      inverted: True
+    name: "up"
+  - platform: gpio
+    pin:
+      number: 37
+      inverted: True
+    name: "down"
+  - platform: gpio
+    pin:
+      number: 39
+      inverted: True
+    name: "ent"
+    
+time:
+  - platform: sntp
+    servers: 172.30.20.1
+    id: sntp_time
+    
+font:
+  - file: "/config/fonts/comic.ttf"
+    id: font_60
+    size: 60
+
+  - file: "/config/fonts/comic.ttf"
+    id: font_20
+    size: 20
+
+  - file: "/config/fonts/comic.ttf"
+    id: font_15
+    size: 15
+    
+  - file: "/config/fonts/comic.ttf"
+    id: font_75
+    size: 75
+    
+image:
+  - file: "/config/pictures/heatOn.png"
+    id: heatOn
+    type: RGB24
+  
+  - file: "/config/pictures/wifi.png"
+    id: wifiSignal
+    resize: 30x30
+    
+  - file: "/config/pictures/fan.png"
+    id: fan
+    resize: 30x30
+    
+  - file: "/config/pictures/thermometerUp.png"
+    id: tempUp
+    resize: 50x50
+    type: RGB24
+    
+  - file: "/config/pictures/thermometerDown.png"
+    id: tempDown
+    resize: 50x50
+    type: RGB24
+
+  - file: "/config/pictures/page.png"
+    id: page
+    resize: 50x50
+
+  - file: "/config/pictures/temperatureInside.png"
+    id: tempIn
+    resize: 60x60  
+    
+  - file: "/config/pictures/temperatureOutside.png"
+    id: tempOut
+    resize: 60x60
+    
+  - file: "/config/pictures/rainy.png"
+    id: rainy
+    
+  - file: "/config/pictures/cloudy.png"
+    id: cloudy
+    
+  - file: "/config/pictures/exclamation.png"
+    id: exclamation
+    
+  - file: "/config/pictures/fog.png"
+    id: fog
+    
+  - file: "/config/pictures/hail.png"
+    id: hail
+    
+  - file: "/config/pictures/lightning.png"
+    id: lightning
+    
+  - file: "/config/pictures/lightning-rainy.png"
+    id: lightning_rainy
+
+  - file: "/config/pictures/partly-cloudy.png"
+    id: partly_cloudy
+
+  - file: "/config/pictures/pouring.png"
+    id: pouring
+
+  - file: "/config/pictures/snowy.png"
+    id: snowy
+
+  - file: "/config/pictures/snowy-rainy.png"
+    id: snowy_rainy
+
+  - file: "/config/pictures/windy.png"
+    id: windy
+
+  - file: "/config/pictures/windy-variant.png"
+    id: windy_variant
+
+  - file: "/config/pictures/sunny.png"
+    id: sunny
+
+  - file: "/config/pictures/rainyB.png"
+    id: rainyB
+    resize: 48x48
+    
+  - file: "/config/pictures/cloudyB.png"
+    id: cloudyB
+    resize: 48x48
+    
+  - file: "/config/pictures/exclamationB.png"
+    id: exclamationB
+    resize: 48x48
+    
+  - file: "/config/pictures/fogB.png"
+    id: fogB
+    resize: 48x48
+    
+  - file: "/config/pictures/hailB.png"
+    id: hailB
+    resize: 48x48
+    
+  - file: "/config/pictures/lightningB.png"
+    id: lightningB
+    resize: 48x48
+    
+  - file: "/config/pictures/lightning-rainyB.png"
+    id: lightning_rainyB
+    resize: 48x48
+
+  - file: "/config/pictures/partly-cloudyB.png"
+    id: partly_cloudyB
+    resize: 48x48
+
+  - file: "/config/pictures/pouringB.png"
+    id: pouringB
+    resize: 48x48
+
+  - file: "/config/pictures/snowyB.png"
+    id: snowyB
+    resize: 48x48
+
+  - file: "/config/pictures/snowy-rainyB.png"
+    id: snowy_rainyB
+    resize: 48x48
+
+  - file: "/config/pictures/windyB.png"
+    id: windyB
+    resize: 48x48
+
+  - file: "/config/pictures/windy-variantB.png"
+    id: windy_variantB
+    resize: 48x48
+
+  - file: "/config/pictures/sunnyB.png"
+    id: sunnyB
+    resize: 48x48
+    
+display:
+  - platform: ili9341
+    model: tft_2.4
+    cs_pin: 27
+    dc_pin: 32
+    led_pin: 04
+    reset_pin: 05
+    rotation: 90
+    update_interval: 1s
+    id: tft
+    pages:
+      - id: temperature
+        lambda: |-
+          // Print date time
+          it.strftime(159, 239, id(font_20), TextAlign::BASELINE_CENTER, "%d.%m. %H:%M", id(sntp_time).now());
+          // Print static icon layout
+          it.image(270, 15, id(tempUp));
+          it.image(270, 95, id(tempDown));
+          it.image(270, 175, id(page));
+          it.image(0, 72, id(tempOut));
+          it.image(0, 148, id(tempIn));
+          // Print outside temperature (from homeassistant sensor)
+          if (id(outside_temperature).has_state()) {
+            it.printf(70, 53, id(font_60), "%.1f°", id(outside_temperature).state);
+          }
+          // Print inside temperature (from homeassistant sensor)
+          if (id(internalTemp).has_state()) {
+            it.printf(70, 111, id(font_75), "%.1f°", id(internalTemp).state);
+          }
+          it.image(65, 209, id(heatOn));
+          it.image(10, 212, id(fan));
+          if (id(wifi_rssi).state > -80 && id(wifi_rssi).state < 0) { it.image(225, 212, id(wifiSignal)); } else {it.filled_rectangle(225, 212, 30, 30, COLOR_OFF);}
+          //it.printf(225, 212, id(font_20), "%.0f", id(wifi_rssi).state);
+          //weather current condition icon
+          if (id(condition).state == "rainy") { it.image(210, 70, id(rainyB)); }
+          if (id(condition).state == "cloudy") { it.image(210, 70, id(cloudyB)); }
+          if (id(condition).state == "exceptional") { it.image(210, 70, id(exclamationB)); }
+          if (id(condition).state == "fog") { it.image(210, 70, id(fogB)); }
+          if (id(condition).state == "hail") { it.image(210, 70, id(hailB)); }
+          if (id(condition).state == "lightning") { it.image(210, 70, id(lightningB)); }
+          if (id(condition).state == "lightning-rainy") { it.image(210, 70, id(lightning_rainyB)); }
+          if (id(condition).state == "partlycloudy") { it.image(210, 70, id(partly_cloudyB)); }
+          if (id(condition).state == "pouring") { it.image(210, 70, id(pouringB)); }
+          if (id(condition).state == "snowy") { it.image(210, 70, id(snowyB)); }
+          if (id(condition).state == "snowy-rainy") { it.image(210, 70, id(snowy_rainyB)); }
+          if (id(condition).state == "windy") { it.image(210, 70, id(windyB)); }
+          if (id(condition).state == "windy-variant") { it.image(210, 70, id(windy_variantB)); }
+          if (id(condition).state == "sunny") { it.image(210, 70, id(sunnyB)); }
+          //weather condition d0 icon
+          if (id(d0_condition).state == "rainy") { it.image(17, 0, id(rainy)); }
+          if (id(d0_condition).state == "cloudy") { it.image(17, 0, id(cloudy)); }
+          if (id(d0_condition).state == "exceptional") { it.image(17, 0, id(exclamation)); }
+          if (id(d0_condition).state == "fog") { it.image(17, 0, id(fog)); }
+          if (id(d0_condition).state == "hail") { it.image(17, 0, id(hail)); }
+          if (id(d0_condition).state == "lightning") { it.image(17, 0, id(lightning)); }
+          if (id(d0_condition).state == "lightning-rainy") { it.image(17, 0, id(lightning_rainy)); }
+          if (id(d0_condition).state == "partlycloudy") { it.image(17, 0, id(partly_cloudy)); }
+          if (id(d0_condition).state == "pouring") { it.image(17, 0, id(pouring)); }
+          if (id(d0_condition).state == "snowy") { it.image(17, 0, id(snowy)); }
+          if (id(d0_condition).state == "snowy-rainy") { it.image(17, 0, id(snowy_rainy)); }
+          if (id(d0_condition).state == "windy") { it.image(17, 0, id(windy)); }
+          if (id(d0_condition).state == "windy-variant") { it.image(17, 0, id(windy_variant)); }
+          if (id(d0_condition).state == "sunny") { it.image(17, 0, id(sunny)); }
+          //weather condition d1 icon
+          if (id(d1_condition).state == "rainy") { it.image(69, 0, id(rainy)); }
+          if (id(d1_condition).state == "cloudy") { it.image(69, 0, id(cloudy)); }
+          if (id(d1_condition).state == "exceptional") { it.image(69, 0, id(exclamation)); }
+          if (id(d1_condition).state == "fog") { it.image(69, 0, id(fog)); }
+          if (id(d1_condition).state == "hail") { it.image(69, 0, id(hail)); }
+          if (id(d1_condition).state == "lightning") { it.image(69, 0, id(lightning)); }
+          if (id(d1_condition).state == "lightning-rainy") { it.image(69, 0, id(lightning_rainy)); }
+          if (id(d1_condition).state == "partlycloudy") { it.image(69, 0, id(partly_cloudy)); }
+          if (id(d1_condition).state == "pouring") { it.image(69, 0, id(pouring)); }
+          if (id(d1_condition).state == "snowy") { it.image(69, 0, id(snowy)); }
+          if (id(d1_condition).state == "snowy-rainy") { it.image(69, 0, id(snowy_rainy)); }
+          if (id(d1_condition).state == "windy") { it.image(69, 0, id(windy)); }
+          if (id(d1_condition).state == "windy-variant") { it.image(69, 0, id(windy_variant)); }
+          if (id(d1_condition).state == "sunny") { it.image(69, 0, id(sunny)); }
+          //weather condition d2 icon
+          if (id(d2_condition).state == "rainy") { it.image(121, 0, id(rainy)); }
+          if (id(d2_condition).state == "cloudy") { it.image(121, 0, id(cloudy)); }
+          if (id(d2_condition).state == "exceptional") { it.image(121, 0, id(exclamation)); }
+          if (id(d2_condition).state == "fog") { it.image(121, 0, id(fog)); }
+          if (id(d2_condition).state == "hail") { it.image(121, 0, id(hail)); }
+          if (id(d2_condition).state == "lightning") { it.image(121, 0, id(lightning)); }
+          if (id(d2_condition).state == "lightning-rainy") { it.image(121, 0, id(lightning_rainy)); }
+          if (id(d2_condition).state == "partlycloudy") { it.image(121, 0, id(partly_cloudy)); }
+          if (id(d2_condition).state == "pouring") { it.image(121, 0, id(pouring)); }
+          if (id(d2_condition).state == "snowy") { it.image(121, 0, id(snowy)); }
+          if (id(d2_condition).state == "snowy-rainy") { it.image(121, 0, id(snowy_rainy)); }
+          if (id(d2_condition).state == "windy") { it.image(121, 0, id(windy)); }
+          if (id(d2_condition).state == "windy-variant") { it.image(121, 0, id(windy_variant)); }
+          if (id(d2_condition).state == "sunny") { it.image(121, 0, id(sunny)); }
+          //weather condition d3 icon
+          if (id(d3_condition).state == "rainy") { it.image(173, 0, id(rainy)); }
+          if (id(d3_condition).state == "cloudy") { it.image(173, 0, id(cloudy)); }
+          if (id(d3_condition).state == "exceptional") { it.image(173, 0, id(exclamation)); }
+          if (id(d3_condition).state == "fog") { it.image(173, 0, id(fog)); }
+          if (id(d3_condition).state == "hail") { it.image(173, 0, id(hail)); }
+          if (id(d3_condition).state == "lightning") { it.image(173, 0, id(lightning)); }
+          if (id(d3_condition).state == "lightning-rainy") { it.image(173, 0, id(lightning_rainy)); }
+          if (id(d3_condition).state == "partlycloudy") { it.image(173, 0, id(partly_cloudy)); }
+          if (id(d3_condition).state == "pouring") { it.image(173, 0, id(pouring)); }
+          if (id(d3_condition).state == "snowy") { it.image(173, 0, id(snowy)); }
+          if (id(d3_condition).state == "snowy-rainy") { it.image(173, 0, id(snowy_rainy)); }
+          if (id(d3_condition).state == "windy") { it.image(173, 0, id(windy)); }
+          if (id(d3_condition).state == "windy-variant") { it.image(173, 0, id(windy_variant)); }
+          if (id(d3_condition).state == "sunny") { it.image(173, 0, id(sunny)); }
+          //weather condition d4 icon
+          if (id(d4_condition).state == "rainy") { it.image(225, 0, id(rainy)); }
+          if (id(d4_condition).state == "cloudy") { it.image(225, 0, id(cloudy)); }
+          if (id(d4_condition).state == "exceptional") { it.image(225, 0, id(exclamation)); }
+          if (id(d4_condition).state == "fog") { it.image(225, 0, id(fog)); }
+          if (id(d4_condition).state == "hail") { it.image(225, 0, id(hail)); }
+          if (id(d4_condition).state == "lightning") { it.image(225, 0, id(lightning)); }
+          if (id(d4_condition).state == "lightning-rainy") { it.image(225, 0, id(lightning_rainy)); }
+          if (id(d4_condition).state == "partlycloudy") { it.image(225, 0, id(partly_cloudy)); }
+          if (id(d4_condition).state == "pouring") { it.image(225, 0, id(pouring)); }
+          if (id(d4_condition).state == "snowy") { it.image(225, 0, id(snowy)); }
+          if (id(d4_condition).state == "snowy-rainy") { it.image(225, 0, id(snowy_rainy)); }
+          if (id(d4_condition).state == "windy") { it.image(225, 0, id(windy)); }
+          if (id(d4_condition).state == "windy-variant") { it.image(225, 0, id(windy_variant)); }
+          if (id(d4_condition).state == "sunny") { it.image(225, 0, id(sunny)); }
+          //wather temperature high / low d0
+          if (id(d0_temp).has_state()) {
+            it.printf(29, 24, id(font_20), TextAlign::TOP_CENTER, "%.1f°", id(d0_temp).state);
+          }
+          if (id(d0_temp_low).has_state()) {
+            it.printf(29, 45, id(font_15), TextAlign::TOP_CENTER, "%.1f°", id(d0_temp_low).state);
+          }
+          //wather temperature high / low d1
+          if (id(d1_temp).has_state()) {
+            it.printf(81, 24, id(font_20), TextAlign::TOP_CENTER, "%.1f°", id(d1_temp).state);
+          }
+          if (id(d1_temp_low).has_state()) {
+            it.printf(81, 45, id(font_15), TextAlign::TOP_CENTER, "%.1f°", id(d1_temp_low).state);
+          }
+          //wather temperature high / low d2
+          if (id(d2_temp).has_state()) {
+            it.printf(133, 24, id(font_20), TextAlign::TOP_CENTER, "%.1f°", id(d2_temp).state);
+          }
+          if (id(d2_temp_low).has_state()) {
+            it.printf(133, 45, id(font_15), TextAlign::TOP_CENTER, "%.1f°", id(d2_temp_low).state);
+          }
+          //wather temperature high / low d3
+          if (id(d3_temp).has_state()) {
+            it.printf(185, 24, id(font_20), TextAlign::TOP_CENTER, "%.1f°", id(d3_temp).state);
+          }
+          if (id(d3_temp_low).has_state()) {
+            it.printf(185, 45, id(font_15), TextAlign::TOP_CENTER, "%.1f°", id(d3_temp_low).state);
+          }
+          //wather temperature high / low d4
+          if (id(d4_temp).has_state()) {
+            it.printf(237, 24, id(font_20), TextAlign::TOP_CENTER, "%.1f°", id(d4_temp).state);
+          }
+          if (id(d4_temp_low).has_state()) {
+            it.printf(237, 45, id(font_15), TextAlign::TOP_CENTER, "%.1f°", id(d4_temp_low).state);
+          }
+output:
+  - platform: ledc
+    pin: 04
+    id: backlight
+
+light:
+  - platform: monochromatic
+    output: backlight
+    name: "display backlight"
+
+    
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: "<api pass>"
+
+ota:
+  password: "<ota pass>"
