@@ -1,0 +1,80 @@
+  - platform: template
+    sensors:
+      weather_temp:
+        friendly_name: "Temperature"
+        unit_of_measurement: '°C'
+        value_template: "{{ state_attr('weather.domov', 'temperature') }}"
+
+      weather_condition:
+        friendly_name: "Condition"
+        value_template: "{{ states('weather.domov') }}"
+
+      weather_temp_d0:
+        friendly_name: "Temperature forecast d0"
+        unit_of_measurement: '°C'
+        value_template: "{{ state_attr('weather.domov', 'forecast')[0].temperature }}"
+
+      weather_temp_d1:
+        friendly_name: "Temperature forecast d1"
+        unit_of_measurement: '°C'
+        value_template: "{{ state_attr('weather.domov', 'forecast')[1].temperature }}"
+
+      weather_temp_d2:
+        friendly_name: "Temperature forecast d2"
+        unit_of_measurement: '°C'
+        value_template: "{{ state_attr('weather.domov', 'forecast')[2].temperature }}"
+
+      weather_temp_d3:
+        friendly_name: "Temperature forecast d3"
+        unit_of_measurement: '°C'
+        value_template: "{{ state_attr('weather.domov', 'forecast')[3].temperature }}"
+
+      weather_temp_d4:
+        friendly_name: "Temperature forecast d4"
+        unit_of_measurement: '°C'
+        value_template: "{{ state_attr('weather.domov', 'forecast')[4].temperature }}"
+
+      weather_temp_low_d0:
+        friendly_name: "Temperature low forecast d0"
+        unit_of_measurement: '°C'
+        value_template: "{{ state_attr('weather.domov', 'forecast')[0].templow }}"
+
+      weather_temp_low_d1:
+        friendly_name: "Temperature low forecast d1"
+        unit_of_measurement: '°C'
+        value_template: "{{ state_attr('weather.domov', 'forecast')[1].templow }}"
+
+      weather_temp_low_d2:
+        friendly_name: "Temperature low forecast d2"
+        unit_of_measurement: '°C'
+        value_template: "{{ state_attr('weather.domov', 'forecast')[2].templow }}"
+
+      weather_temp_low_d3:
+        friendly_name: "Temperature low forecast d3"
+        unit_of_measurement: '°C'
+        value_template: "{{ state_attr('weather.domov', 'forecast')[3].templow }}"
+
+      weather_temp_low_d4:
+        friendly_name: "Temperature low forecast d4"
+        unit_of_measurement: '°C'
+        value_template: "{{ state_attr('weather.domov', 'forecast')[4].templow }}"
+
+      weather_cond_d0:
+        friendly_name: "Condition forecast d0"
+        value_template: "{{ state_attr('weather.domov', 'forecast')[0].condition }}"
+
+      weather_cond_d1:
+        friendly_name: "Condition forecast d1"
+        value_template: "{{ state_attr('weather.domov', 'forecast')[1].condition }}"
+
+      weather_cond_d2:
+        friendly_name: "Condition forecast d2"
+        value_template: "{{ state_attr('weather.domov', 'forecast')[2].condition }}"
+
+      weather_cond_d3:
+        friendly_name: "Condition forecast d3"
+        value_template: "{{ state_attr('weather.domov', 'forecast')[3].condition }}"
+
+      weather_cond_d4:
+        friendly_name: "Condition forecast d4"
+        value_template: "{{ state_attr('weather.domov', 'forecast')[4].condition }}"
